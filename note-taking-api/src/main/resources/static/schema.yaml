@@ -1,0 +1,70 @@
+openapi: 3.1.0
+info:
+  title: Markdown Note-Taking API
+  version: 0.0.1
+paths:
+  /note/grammar:
+    post:
+      operationId: checkGrammar
+      summary: verifies grammar of the supplied note
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextDTO'
+      responses:
+        200:
+          description: Grammar verification completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrammarResultDTO'
+        400:
+          $ref: '#/components/responses/ClientError'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+components:
+  responses:
+    ClientError:
+      description: Client error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDTO'
+    ServerError:
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDTO'
+
+  schemas:
+    GrammarErrorDTO:
+      type: object
+      properties:
+        message:
+          type: string
+    GrammarResultDTO:
+      type: object
+      required:
+        - correctedText
+      properties:
+        correctedText:
+          type: string
+    TextDTO:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+    ErrorDTO:
+      type: object
+      required:
+        - message
+      properties:
+        field:
+          type: string
+        message:
+          type: string

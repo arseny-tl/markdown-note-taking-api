@@ -1,0 +1,6 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: markdown-note-taking-api
